@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "java-mcp-server": {
+      "command": "/bin/bash",
+      "args": [
+        "/path/to/your/project/scripts/run-server.sh"
+      ],
+      "env": {
+        "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk"
+      }
+    }
+  }
+}
+
+# 또는 직접 JAR 실행:
+{
+  "mcpServers": {
+    "java-mcp-server": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "/path/to/your/project/target/mcp-server-example-1.0.0.jar"
+      ]
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    
+    <!-- File Appender만 사용 (STDOUT 제거) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/mcp-server.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/mcp-server.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- MCP SDK 로깅 레벨 설정 -->
+    <logger name="io.modelcontextprotocol.sdk" level="INFO" />
+    
+    <!-- 애플리케이션 로깅 레벨 설정 -->
+    <logger name="com.example.mcp" level="INFO" />
+
+    <!-- Root Logger - STDOUT 제거하고 FILE만 사용 -->
+    <root level="debug">
+        <appender-ref ref="FILE" />
+    </root>
+
+</configuration>

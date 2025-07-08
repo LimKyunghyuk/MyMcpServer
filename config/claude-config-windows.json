@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "java-mcp-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "C:\\path\\to\\your\\project\\scripts\\run-server.bat"
+      ],
+      "env": {
+        "JAVA_HOME": "C:\\Program Files\\Java\\jdk-17"
+      }
+    }
+  }
+}
+
+REM 또는 직접 JAR 실행:
+{
+  "mcpServers": {
+    "java-mcp-server": {
+      "command": "java",
+      "args": [
+        "-jar",
+        "C:\\path\\to\\your\\project\\target\\mcp-server-example-1.0.0.jar"
+      ]
+    }
+  }
+}
