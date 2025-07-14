@@ -1,5 +1,9 @@
 package com.example.mcp;
 
+import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.joran.JoranConfigurator;
+import ch.qos.logback.core.util.StatusPrinter;
+
 import com.example.mcp.schema.McpMessage;
 import com.example.mcp.schema.McpError;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,9 +33,8 @@ public class McpServerMain {
     private final Map<String, Object> serverCapabilities;
 
     public McpServerMain() {
-        // ObjectMapper UTF-8 설정
-
-        this.objectMapper.configure(com.fasterxml.jackson.core.JsonGenerator.Feature.ESCAPE_NON_ASCII, false);
+        // ObjectMapper UTF-8 설정 - ASCII 이스케이프 활성화로 한글 문제 방지
+        this.objectMapper.configure(com.fasterxml.jackson.core.JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
         
         this.toolRegistry = new ToolRegistry();
         this.resourceRegistry = new ResourceRegistry();
@@ -60,8 +63,7 @@ public class McpServerMain {
     }
 
     public static void main(String[] args) {
-        // 로그는 파일에만 기록하고 시작 메시지도 제거
-        
+
         McpServerMain server = new McpServerMain();
         try {
             server.start();
@@ -74,13 +76,17 @@ public class McpServerMain {
     public void start() throws IOException {
         // 시작 메시지도 로그 파일에만 기록
         logger.info("MCP 서버가 시작되었습니다. 클라이언트 연결을 기다리는 중...");
-        
-        // UTF-8 인코딩 명시적 설정
+        // 표준입출력
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
-        PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"), false);
+        PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"), true); // 자동 플러시 활성화
         
         String line;
         while ((line = reader.readLine()) != null) {
+            line = line.trim(); // 공백 문자 제거
+            if (line.isEmpty()) {
+                continue; // 빈 줄 무시
+            }
+            
             try {
                 McpMessage request = objectMapper.readValue(line, McpMessage.class);
                 handleRequest(request, writer); // 동기 처리로 변경
@@ -188,11 +194,14 @@ public class McpServerMain {
     private synchronized void sendResponse(McpMessage response, PrintWriter writer) {
         try {
             String json = objectMapper.writeValueAsString(response);
+            
+            // 디버그를 위해 JSON 길이 확인
+            logger.debug("응답 전송 (길이: {}): {}", json.length(), json.substring(0, Math.min(100, json.length())));
+            
             // JSON 메시지를 한 줄로 출력하고 즉시 플러시
-            writer.print(json);
-            writer.print("\n");
-            writer.flush();
-            logger.debug("응답 전송: {}", json);
+            writer.println(json); // println 사용으로 개행 문자 확실히 추가
+            writer.flush(); // 명시적 플러시
+            
         } catch (Exception e) {
             logger.error("응답 전송 중 오류 발생", e);
         }

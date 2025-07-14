@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-    
-    <!-- File Appender만 사용 (STDOUT 제거) -->
+<configuration debug="false" scan="false">
+
+    <!-- 상태 메시지 완전 차단 -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
+    <!-- ConsoleAppender 추가 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/mcp-server.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -17,14 +27,12 @@
         </encoder>
     </appender>
 
-    <!-- MCP SDK 로깅 레벨 설정 -->
-    <logger name="io.modelcontextprotocol.sdk" level="INFO" />
-    
     <!-- 애플리케이션 로깅 레벨 설정 -->
-    <logger name="com.example.mcp" level="INFO" />
+    <logger name="com.example.mcp" level="debug" />
 
-    <!-- Root Logger - STDOUT 제거하고 FILE만 사용 -->
+    <!-- Root Logger - STDOUT과 FILE 둘다 사용 -->
     <root level="debug">
+<!--        <appender-ref ref="CONSOLE" />-->
         <appender-ref ref="FILE" />
     </root>
 
