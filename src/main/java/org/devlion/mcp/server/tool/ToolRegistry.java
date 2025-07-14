@@ -1,8 +1,8 @@
-package com.example.mcp;
+package org.devlion.mcp.server.tool;
 
-import com.example.mcp.schema.McpMessage;
-import com.example.mcp.schema.McpError;
-import com.example.mcp.schema.Tool;
+import org.devlion.mcp.server.schema.McpError;
+import org.devlion.mcp.server.schema.McpMessage;
+import org.devlion.mcp.server.schema.Tool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

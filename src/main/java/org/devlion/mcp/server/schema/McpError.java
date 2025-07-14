@@ -1,4 +1,4 @@
-package com.example.mcp.schema;
+package org.devlion.mcp.server.schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,7 +1,7 @@
-package com.example.mcp.schema;
+package org.devlion.mcp.server.schema;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * MCP JSON-RPC 메시지의 기본 클래스

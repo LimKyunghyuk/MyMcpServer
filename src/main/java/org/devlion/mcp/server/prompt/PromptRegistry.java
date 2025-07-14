@@ -1,12 +1,15 @@
-package com.example.mcp;
+package org.devlion.mcp.server.prompt;
 
-import com.example.mcp.schema.McpMessage;
-import com.example.mcp.schema.McpError;
-import com.example.mcp.schema.Prompt;
+import org.devlion.mcp.server.schema.McpError;
+import org.devlion.mcp.server.schema.McpMessage;
+import org.devlion.mcp.server.schema.Prompt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * MCP 서버에서 사용할 프롬프트들을 등록하고 관리하는 클래스

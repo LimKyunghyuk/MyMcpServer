@@ -1,13 +1,15 @@
-package com.example.mcp;
+package org.devlion.mcp.server.resource;
 
-import com.example.mcp.schema.McpMessage;
-import com.example.mcp.schema.McpError;
-import com.example.mcp.schema.Resource;
+import org.devlion.mcp.server.schema.McpError;
+import org.devlion.mcp.server.schema.McpMessage;
+import org.devlion.mcp.server.schema.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * MCP 서버에서 사용할 리소스들을 등록하고 관리하는 클래스

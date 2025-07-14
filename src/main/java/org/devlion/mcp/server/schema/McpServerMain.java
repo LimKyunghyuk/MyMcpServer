@@ -1,17 +1,14 @@
-package com.example.mcp;
+package org.devlion.mcp.server.schema;
 
-import ch.qos.logback.classic.LoggerContext;
-import ch.qos.logback.classic.joran.JoranConfigurator;
-import ch.qos.logback.core.util.StatusPrinter;
 
-import com.example.mcp.schema.McpMessage;
-import com.example.mcp.schema.McpError;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.devlion.mcp.server.prompt.PromptRegistry;
+import org.devlion.mcp.server.resource.ResourceRegistry;
+import org.devlion.mcp.server.tool.ToolRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -42,7 +39,7 @@ public class McpServerMain {
         this.executor = Executors.newCachedThreadPool();
         
         // 로그 디렉토리 생성
-        java.io.File logDir = new java.io.File("logs");
+        File logDir = new File("logs");
         if (!logDir.exists()) {
             logDir.mkdirs();
         }
@@ -76,6 +73,7 @@ public class McpServerMain {
     public void start() throws IOException {
         // 시작 메시지도 로그 파일에만 기록
         logger.info("MCP 서버가 시작되었습니다. 클라이언트 연결을 기다리는 중...");
+
         // 표준입출력
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
         PrintWriter writer = new PrintWriter(new OutputStreamWriter(System.out, "UTF-8"), true); // 자동 플러시 활성화
